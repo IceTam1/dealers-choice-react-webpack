@@ -15,6 +15,17 @@ app.get('/api/recipes', async (req, res, next) => {
   }
 })
 
+app.delete('/api/recipes/:id', async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findByPk(req.params.id)
+    await recipe.destroy()
+    res.sendStatus(204)
+  }
+  catch (ex) {
+    next(ex)
+  }
+})
+
 app.post('/api/recipes', async (req, res, next) => {
   try {
     res.status(201).send(await Recipe.generateRandom());
@@ -23,6 +34,8 @@ app.post('/api/recipes', async (req, res, next) => {
     next(ex)
   }
 })
+
+
 
 const start = async () => {
   try {
