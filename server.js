@@ -1,4 +1,4 @@
-const { syncAndSeed, models: { Recipe } } = require('./db');
+const { syncAndSeed, Recipe } = require('./db');
 const express = require('express')
 const app = express();
 const path = require('path')
@@ -9,6 +9,15 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/api/recipes', async (req, res, next) => {
   try {
     res.send(await Recipe.findAll())
+  }
+  catch (ex) {
+    next(ex)
+  }
+})
+
+app.post('/api/recipes', async (req, res, next) => {
+  try {
+    res.status(201).send(await Recipe.generateRandom());
   }
   catch (ex) {
     next(ex)

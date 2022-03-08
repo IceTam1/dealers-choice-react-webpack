@@ -4,9 +4,13 @@ const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgres://localhos
 const Recipe = sequelize.define('recipe', {
   name: {
     type: Sequelize.STRING,
-    unique: true
+
   }
 })
+
+Recipe.generateRandom = function () {
+  return this.create({ name: `Recipe ${Math.ceil(Math.random() * 5000)}` });
+}
 
 const syncAndSeed = async () => {
   try {
@@ -21,8 +25,6 @@ const syncAndSeed = async () => {
 }
 
 module.exports = {
-  models: {
-    Recipe
-  },
+  Recipe,
   syncAndSeed
 };
