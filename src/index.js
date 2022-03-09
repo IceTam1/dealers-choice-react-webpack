@@ -6,7 +6,7 @@ const Recipe = (props) => {
   const recipe = props.recipe;
   const destroy = props.destroy;
   return (
-    <li>{ recipe.name } <button onClick={ ()=> destroy(recipe)}>Delete Recipe</button></li>
+    <li>{ recipe.name } <button className='delete' onClick={ ()=> destroy(recipe)}>Delete Recipe</button></li>
   )
 }
 
@@ -41,17 +41,16 @@ class App extends React.Component {
     this.setState({ recipe })
   }
 
-  
 
   render () {
     return (
-      <div>
-        <h1> The Recipe Randomizer! </h1>
-        <button onClick={ this.create }> Add New Recipe </button>
-        <ul>
+      <div id='recipepage'>
+        <h1 className='title'> The Recipe Randomizer! </h1>
+        <button className='newrecipe' onClick={ this.create }> Add New Recipe </button>
+        <ul id='recipes'>
             {this.state.recipe.map((recipe) => {
               return (
-                <Recipe recipe={recipe} key={recipe.id} destroy={this.destroy}/>
+                <Recipe className='recipe' recipe={recipe} key={recipe.id} destroy={this.destroy}/>
               )
             })}
         </ul>
@@ -59,6 +58,5 @@ class App extends React.Component {
     )
   }
 }
-
 
 ReactDOM.render(<App />, document.querySelector('#root'));
